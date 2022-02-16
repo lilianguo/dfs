@@ -90,4 +90,37 @@ class ValidParentheses {
         }
         return stack.isEmpty();
     }
+
+
+    public boolean isValidIII(String s) {
+        if (s == null || s.length() == 0) {
+            return true;
+        } else if (s.length() % 2 != 0 ) {
+            return false;
+        } else {
+            Stack<Character> stack = new Stack<>(); 
+            Set<Character> left = new HashSet<>();
+            left.add('{');
+            left.add('[');
+            left.add('(');
+            
+            for (char c : s.toCharArray()) {
+                if (left.contains(c)) {
+                    stack.push(c);
+                } else {
+                    if ( !stack.isEmpty() &&
+                        ((stack.peek() == '(' && c == ')') ||
+                          (stack.peek() == '[' && c == ']')   ||
+                          (stack.peek() == '{' && c == '}')   
+                        )) {
+                        stack.pop();
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            return stack.isEmpty();
+        }
+    }
 }
